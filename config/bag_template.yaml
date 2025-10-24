@@ -1,0 +1,75 @@
+# ROS Bag Metadata Validation Template
+# Reference: /media/jw/storage1/data/ros_bag/251001-1/metadata.yaml
+# Hz는 runtime에 동적으로 계산: Hz = message_count / (duration_ns / 1e9)
+
+validation_rules:
+  # 필수 구조 키
+  required_keys:
+    - rosbag2_bagfile_information
+    - rosbag2_bagfile_information.version
+    - rosbag2_bagfile_information.storage_identifier
+    - rosbag2_bagfile_information.duration
+    - rosbag2_bagfile_information.duration.nanoseconds
+    - rosbag2_bagfile_information.starting_time
+    - rosbag2_bagfile_information.starting_time.nanoseconds_since_epoch
+    - rosbag2_bagfile_information.message_count
+    - rosbag2_bagfile_information.topics_with_message_count
+    - rosbag2_bagfile_information.compression_format
+    - rosbag2_bagfile_information.compression_mode
+    - rosbag2_bagfile_information.relative_file_paths
+    - rosbag2_bagfile_information.files
+
+  # 필수 topic 정의 (Hz는 동적 계산)
+  required_topics:
+    - name: /imu
+      type: sensor_msgs/msg/Imu
+      min_hz: 5.0       # 최소 5 Hz
+      max_hz: 15.0      # 최대 15 Hz
+
+    - name: /gps_deg
+      type: std_msgs/msg/Float64
+      min_hz: 5.0       # 최소 5 Hz
+      max_hz: 15.0      # 최대 15 Hz
+
+    - name: /gps/fix
+      type: sensor_msgs/msg/NavSatFix
+      min_hz: 5.0       # 최소 5 Hz
+      max_hz: 15.0      # 최대 15 Hz
+
+    - name: /camera/camera/imu
+      type: sensor_msgs/msg/Imu
+      min_hz: 40.0      # 최소 40 Hz
+      max_hz: 60.0      # 최대 60 Hz
+
+    - name: /camera/camera/color/image_raw
+      type: sensor_msgs/msg/Image
+      min_hz: 10.0      # 최소 10 Hz
+      max_hz: 20.0      # 최대 20 Hz
+
+    - name: /camera/camera/color/camera_info
+      type: sensor_msgs/msg/CameraInfo
+      min_hz: 10.0      # 최소 10 Hz
+      max_hz: 20.0      # 최대 20 Hz
+
+    - name: /camera/camera/aligned_depth_to_color/image_raw
+      type: sensor_msgs/msg/Image
+      min_hz: 2.0       # 최소 2 Hz
+      max_hz: 5.0       # 최대 5 Hz
+
+    - name: /camera/camera/color/metadata
+      type: realsense2_camera_msgs/msg/Metadata
+      min_hz: 10.0      # 최소 10 Hz
+      max_hz: 20.0      # 최대 20 Hz
+
+    - name: /camera/camera/aligned_depth_to_color/camera_info
+      type: sensor_msgs/msg/CameraInfo
+      min_hz: 2.0       # 최소 2 Hz
+      max_hz: 5.0       # 최대 5 Hz
+
+  # 최소 요구사항
+  constraints:
+    min_duration_seconds: 1.0      # 최소 1초 이상 녹화
+    min_message_count: 100         # 최소 100개 이상 메시지
+    required_topic_count: 9        # 필수 topic 개수
+    storage_identifier: sqlite3    # 필수 storage 형식
+    version: 5                     # 필수 버전

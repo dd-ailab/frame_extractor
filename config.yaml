@@ -1,0 +1,49 @@
+# RGB-Depth Frame Extractor Configuration
+
+# ROS Bag Topics
+topics:
+  rgb: "/camera/camera/color/image_raw"
+  depth: "/camera/camera/aligned_depth_to_color/image_raw"
+  imu: "/imu"
+  # Alternative IMU topic (camera IMU)
+  # imu: "/camera/camera/imu"
+
+# Straight-Line Detection Parameters
+motion_detection:
+  # Angular velocity threshold for straight-line detection (rad/s)
+  # Lower value = stricter straight-line requirement
+  angular_velocity_threshold: 0.05
+
+  # Minimum segment duration to be considered (seconds)
+  min_segment_duration: 2.0
+
+  # Moving average window size for IMU smoothing
+  moving_average_window: 10
+
+# Frame Synchronization Parameters
+synchronization:
+  # Maximum time difference between RGB and Depth frames (milliseconds)
+  # 33ms = ~1 frame @ 30fps
+  time_tolerance_ms: 33
+
+# Output Settings
+output:
+  # RGB image format: 'png' or 'jpg'
+  rgb_format: "png"
+
+  # Depth image format: 'png' (16-bit) or 'npy' (numpy array)
+  depth_format: "png"
+
+  # Save depth visualization images (colormap applied)
+  save_visualization: true
+
+  # JPEG quality (only for jpg format, 0-100)
+  jpeg_quality: 95
+
+# Processing Options
+processing:
+  # Enable progress bars
+  show_progress: true
+
+  # Verbose logging
+  verbose: true
