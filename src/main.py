@@ -10,7 +10,7 @@ CameraInfo, GPS, RealSense Metadata, IMU 통합을 통한 향상된 RGB-Depth fr
 - IMU linear acceleration (x, y, z, magnitude) 수집
 - 통합 metadata_all.csv 출력 (모든 센서 데이터 포함)
 """
-
+import os
 import argparse
 import sys
 import logging
@@ -76,7 +76,7 @@ class RgbDepthExtractorPipelineV2:
 
     # 기본 설정 상수 (Default Configuration Constants)
     DEFAULT_TIME_TOLERANCE_MS = 33  # RGB/Depth 동기화 허용 오차 (milliseconds)
-    DEFAULT_PARALLEL_WORKERS = 4  # 병렬 처리 worker 수
+    DEFAULT_PARALLEL_WORKERS = os.cpu_count() // 2 # 병렬 처리 worker 수
     MIN_PARALLEL_WORKERS = 1  # 최소 worker 수
 
     def __init__(
